@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  background: #211f25;
+  color: white;
+  font-size: 20px;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media screen and (max-width: 1214px) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+ul {
+  padding-inline-start: 30px;
+
+  @media screen and (max-width: 839px) {
+    padding-inline-start: 15px;
+  }
+}
+
+li {
+  list-style-type: none;
+  margin-top: 10px;
+}

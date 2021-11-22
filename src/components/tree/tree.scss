@@ -1,0 +1,129 @@
+.tree {
+  &-container {
+    padding-top: 40px;
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+
+      &:hover {
+        color: #f9b508;
+      }
+
+      &-create {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .item {
+      margin-top: 20px;
+      cursor: pointer;
+      width: fit-content;
+      position: relative;
+      display: flex;
+
+      @media screen and (max-width: 499px) {
+        margin-top: 30px;
+      }
+
+      @media screen and (max-width: 374px) {
+        flex-direction: column;
+      }
+
+      &.group {
+        & ~ ul {
+          display: none;
+        }
+
+        .item-name {
+          &::before {
+            content: "▼";
+            font-size: 14px;
+            position: absolute;
+            left: -22px;
+            top: 7px;
+            color: #f9b508;
+            transition: 0.5s;
+
+            @media screen and (max-width: 839px) {
+              left: -15px;
+            }
+          }
+        }
+
+        &.opened {
+          & ~ ul {
+            display: block;
+          }
+
+          .item-name {
+            &::before {
+              transform: rotate(180deg) translateY(3px);
+            }
+          }
+        }
+      }
+
+      .item-name {
+        margin-right: 30px;
+      }
+
+      .actions {
+        display: flex;
+        align-items: flex-start;
+        min-height: 25px;
+
+        @media screen and (max-width: 374px) {
+          margin-top: 10px;
+        }
+
+        &-edit {
+          margin-right: 15px;
+
+          & ~ .actions-item {
+            display: none;
+          }
+
+          &:hover {
+            color: #f9b508;
+          }
+
+          &.active {
+            color: #f9b508;
+
+            & ~ .actions-item {
+              display: block;
+            }
+          }
+        }
+
+        &-item {
+          margin-right: 15px;
+
+          .icon-create {
+            width: 20px;
+            height: 20px;
+          }
+
+          &:hover {
+            color: #f9b508;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 779px) {
+  .tree {
+    &-container {
+      ul {
+        ul {
+          padding-inline-start: 7px;
+        }
+      }
+    }
+  }
+}

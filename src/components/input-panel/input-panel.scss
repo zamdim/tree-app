@@ -1,0 +1,60 @@
+.input-panel {
+  display: none;
+  margin-bottom: 30px;
+  position: relative;
+
+  &.open {
+    display: flex;
+  }
+
+  input {
+    width: 250px;
+    font-size: 18px;
+    padding: 5px 105px 5px 5px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid black;
+    background: #211f25;
+    color: white;
+
+    &::placeholder {
+      font-size: 18px;
+    }
+
+    &:focus {
+      border-color: #f9b508;
+    }
+
+    &:hover {
+      border-color: #f9b508;
+    }
+  }
+
+  .btn {
+    padding: 5px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    background: #f9b508;
+    color: white;
+    border: 1px solid #f9b508;
+    position: absolute;
+    left: 156px;
+
+    &.active {
+      background: #916c03;
+    }
+
+    &:hover {
+      background: #916c03;
+    }
+  }
+}
+
+@media screen and (max-width: 388px) {
+  .search-panel {
+    input {
+      width: 100%;
+    }
+  }
+}
