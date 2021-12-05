@@ -13,7 +13,7 @@ export default function InputPanel({ onAddItemTree, added, itemId }) {
   const onAddItemInput = (trim, itemId) => {
     setTrim("");
 
-    if (trim) {
+    if (trim.trim()) {
       onAddItemTree(trim, itemId);
     }
   };
