@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { removeObject, appendProps, returnFound } from "find-and";
 import Tree from "../tree";
 import TreeService from "../../services/tree-service";
@@ -6,39 +6,37 @@ import Spinner from "../spinner";
 
 import "./app.scss";
 
-class App extends Component {
-  state = {
-    data: null,
-    loading: true,
-  };
+export default function App() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  treeService = new TreeService();
+  const treeService = new TreeService();
 
-  componentDidMount() {
-    this.treeService
+  useEffect(() => {
+    treeService
       .getData()
       .then((data) => {
-        this.setState(() => {
-          return { data: data, loading: false };
-        });
+        setData(data);
+        setLoading(false);
       })
       .catch((error) => console.error(error));
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  onDelete = (id) => {
-    this.setState(({ data }) => {
-      let newArr = removeObject(data, { id: id });
-      return { data: newArr };
+  const onDelete = (id) => {
+    setData((prevData) => {
+      let newArr = removeObject(prevData, { id: id });
+      setData(newArr);
     });
   };
 
-  onAddItem = (trim, itemId) => {
-    this.setState(({ data }) => {
-      const currentItem = returnFound(data, { id: itemId });
+  const onAddItem = (trim, itemId) => {
+    setData((prevData) => {
+      const currentItem = returnFound(prevData, { id: itemId });
       let newArr;
 
       if (itemId === "root") {
-        newArr = data.concat([
+        newArr = prevData.concat([
           { id: trim + Math.floor(Math.random() * 1000), name: trim },
         ]);
       } else if (currentItem.children) {
@@ -47,10 +45,10 @@ class App extends Component {
           id: trim + Math.floor(Math.random() * 1000),
           name: trim,
         });
-        newArr = appendProps(data, { id: itemId }, { children });
+        newArr = appendProps(prevData, { id: itemId }, { children });
       } else {
         newArr = appendProps(
-          data,
+          prevData,
           { id: itemId },
           {
             children: [
@@ -60,19 +58,15 @@ class App extends Component {
         );
       }
 
-      return { data: newArr };
+      return newArr;
     });
   };
 
-  render() {
-    const { data, loading } = this.state;
-    const content = loading ? (
-      <Spinner />
-    ) : (
-      <Tree data={data} onDelete={this.onDelete} onAddItem={this.onAddItem} />
-    );
-    return <React.Fragment>{content}</React.Fragment>;
-  }
-}
+  const content = loading ? (
+    <Spinner />
+  ) : (
+    <Tree data={data} onDelete={onDelete} onAddItem={onAddItem} />
+  );
 
-export default App;
+  return <>{content}</>;
+}
