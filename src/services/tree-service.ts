@@ -1,3 +1,5 @@
+import { TreeArr } from "../types-common";
+
 export default class TreeService {
   getData = async () => {
     return new Promise((resolve) => {
@@ -7,7 +9,7 @@ export default class TreeService {
     });
   };
 
-  tree = [
+  tree: TreeArr = [
     {
       name: "guitars",
       id: "65dfg465",

@@ -1,16 +1,25 @@
 import React, { useState } from "react";
-
 import "./input-panel.scss";
 
-export default function InputPanel({ onAddItemTree, added, itemId }) {
-  const [trim, setTrim] = useState("");
+interface InputPanelProps {
+  onAddItemTree: (trim: string, itemId: string) => void;
+  added: string;
+  itemId: string;
+}
 
-  const onChangeTrim = (e) => {
+export default function InputPanel({
+  onAddItemTree,
+  added,
+  itemId,
+}: InputPanelProps): JSX.Element {
+  const [trim, setTrim] = useState<string>("");
+
+  const onChangeTrim = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const trim = e.target.value;
     setTrim(trim);
   };
 
-  const onAddItemInput = (trim, itemId) => {
+  const onAddItemInput = (trim: string, itemId: string): void => {
     setTrim("");
 
     if (trim.trim()) {

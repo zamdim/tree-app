@@ -3,13 +3,24 @@ import InputPanel from "../input-panel";
 import Icons from "../icons";
 
 import "./tree.scss";
+import { TreeArr, TreeNode } from "../../types-common";
 
-export default function Tree({ onAddItem, data, onDelete }) {
-  const [opened, setOpened] = useState([]);
-  const [added, setAdded] = useState("");
-  const [edited, setEdited] = useState("");
+interface TreeProps {
+  onAddItem: (trim: string, itemId: string) => void;
+  data: TreeArr | null;
+  onDelete: (id: string) => void;
+}
 
-  const onOpen = (item) => {
+export default function Tree({
+  onAddItem,
+  data,
+  onDelete,
+}: TreeProps): JSX.Element {
+  const [opened, setOpened] = useState<string[]>([]);
+  const [added, setAdded] = useState<string>("");
+  const [edited, setEdited] = useState<string>("");
+
+  const onOpen = (item: string): void => {
     setOpened((prevOpened) => {
       if (prevOpened.indexOf(item) === -1) {
         return [...prevOpened, item];
@@ -19,13 +30,13 @@ export default function Tree({ onAddItem, data, onDelete }) {
     });
   };
 
-  const onAddInput = (added) => {
+  const onAddInput = (added: string): void => {
     setAdded((prevAdded) => {
       return prevAdded !== added ? added : "";
     });
   };
 
-  const onAddItemTree = (trim, itemId) => {
+  const onAddItemTree = (trim: string, itemId: string): void => {
     onAddInput("");
     if (opened.indexOf(itemId) === -1) {
       onOpen(itemId);
@@ -33,15 +44,19 @@ export default function Tree({ onAddItem, data, onDelete }) {
     onAddItem(trim, itemId);
   };
 
-  const onEdit = (edited) => {
+  const onEdit = (edited: string): void => {
     setEdited((prevEdited) => {
       return edited !== prevEdited ? edited : "";
     });
     setAdded("");
   };
 
-  const getPath = (itemId) => {
-    const findPath = (arr, itemId, currentPath) => {
+  const getPath = (itemId: string): void => {
+    const findPath = (
+      arr: TreeArr,
+      itemId: string,
+      currentPath: string
+    ): void => {
       arr.forEach((a) => {
         if (a.id === itemId) {
           console.log(currentPath + a.name);
@@ -52,14 +67,14 @@ export default function Tree({ onAddItem, data, onDelete }) {
       });
     };
 
-    findPath(data, itemId, "");
+    data && findPath(data, itemId, "");
   };
 
   let tree = null;
 
   if (data !== null) {
     tree = data.map((item) => {
-      const createList = (item) => {
+      const createList = (item: TreeNode): React.ReactNode => {
         const editedClass =
           item.id === edited ? "actions-edit active" : "actions-edit";
 
@@ -80,7 +95,7 @@ export default function Tree({ onAddItem, data, onDelete }) {
           </div>
         );
 
-        const inputPanel = (
+        const inputPanel: JSX.Element = (
           <InputPanel
             added={added}
             itemId={item.id}

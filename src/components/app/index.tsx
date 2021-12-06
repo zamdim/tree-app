@@ -5,17 +5,18 @@ import TreeService from "../../services/tree-service";
 import Spinner from "../spinner";
 
 import "./app.scss";
+import { TreeArr } from "../../types-common";
 
-export default function App() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function App(): JSX.Element {
+  const [data, setData] = useState<TreeArr | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const treeService = new TreeService();
 
   useEffect(() => {
     treeService
       .getData()
-      .then((data) => {
+      .then((data: any) => {
         setData(data);
         setLoading(false);
       })
@@ -23,19 +24,18 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onDelete = (id) => {
+  const onDelete = (id: string) => {
     setData((prevData) => {
-      let newArr = removeObject(prevData, { id: id });
-      setData(newArr);
+      return removeObject(prevData, { id: id });
     });
   };
 
-  const onAddItem = (trim, itemId) => {
+  const onAddItem = (trim: string, itemId: string) => {
     setData((prevData) => {
       const currentItem = returnFound(prevData, { id: itemId });
       let newArr;
 
-      if (itemId === "root") {
+      if (itemId === "root" && prevData !== null) {
         newArr = prevData.concat([
           { id: trim + Math.floor(Math.random() * 1000), name: trim },
         ]);
