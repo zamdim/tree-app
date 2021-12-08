@@ -16,7 +16,7 @@ export default function App(): JSX.Element {
   useEffect(() => {
     treeService
       .getData()
-      .then((data: any) => {
+      .then((data) => {
         setData(data);
         setLoading(false);
       })

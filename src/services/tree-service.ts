@@ -2,7 +2,7 @@ import { TreeArr } from "../types-common";
 
 export default class TreeService {
   getData = async () => {
-    return new Promise((resolve) => {
+    return new Promise<TreeArr>((resolve) => {
       setTimeout(() => {
         resolve(this.tree);
       }, 1000);
